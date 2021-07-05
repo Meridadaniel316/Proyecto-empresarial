@@ -2,15 +2,15 @@ import makeComment from '../comment'
 export default function makeEditComment ({ commentsDb, handleModeration }) {
   return async function editComment ({ id, ...changes } = {}) {
     if (!id) {
-      throw new Error('You must supply an id.')
+      throw new Error('Debe ingresar una id valida.')
     }
     if (!changes.text) {
-      throw new Error('You must supply text.')
+      throw new Error('Debe ingresar un texto valido.')
     }
     const existing = await commentsDb.findById({ id })
 
     if (!existing) {
-      throw new RangeError('Comment not found.')
+      throw new RangeError('Comentario no encontrado.')
     }
     const comment = makeComment({ ...existing, ...changes, modifiedOn: null })
     if (comment.getHash() === existing.hash) {

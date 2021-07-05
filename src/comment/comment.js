@@ -11,7 +11,7 @@ export default function buildMakeComment ({ Id, md5, sanitize, makeSource }) {
     text
   } = {}) {
     if (!Id.isValidId(id)) {
-      throw new Error('El comentario debe tener una Id valida.')
+      throw new Error('El comentario debe tener una Id valida')
     }
     if (!author) {
       throw new Error('El comentario debe tener un autor.')
@@ -29,7 +29,7 @@ export default function buildMakeComment ({ Id, md5, sanitize, makeSource }) {
       throw new Error('El comentario debe tener una fuente.')
     }
     if (replyToId && !Id.isValidId(replyToId)) {
-      throw new Error('Si se suministra. El comentario debe tener un ReplyToId valido.')
+      throw new Error('Si se suministra. El comentario debe tener un replyToId valido')
     }
 
     let sanitizedText = sanitize(text).trim()
@@ -38,7 +38,7 @@ export default function buildMakeComment ({ Id, md5, sanitize, makeSource }) {
     }
 
     const validSource = makeSource(source)
-    const deletedText = '.xX Este comentario ha sido eliminado. Xx.'
+    const deletedText = '.xX Este comentario ha sido eliminado Xx.'
     let hash
 
     return Object.freeze({

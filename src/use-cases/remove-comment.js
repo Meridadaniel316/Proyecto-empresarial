@@ -3,7 +3,7 @@ import makeComment from '../comment'
 export default function makeRemoveComment ({ commentsDb }) {
   return async function removeComment ({ id } = {}) {
     if (!id) {
-      throw new Error('You must supply a comment id.')
+      throw new Error('Debe ingresar una id valida.')
     }
 
     const commentToDelete = await commentsDb.findById({ id })
@@ -50,7 +50,7 @@ export default function makeRemoveComment ({ commentsDb }) {
     return {
       deletedCount: 0,
       softDelete: false,
-      message: 'Comment not found, nothing to delete.'
+      message: 'Comentario no encontrado, no hay nada que eliminar.'
     }
   }
 
@@ -67,7 +67,7 @@ export default function makeRemoveComment ({ commentsDb }) {
     return {
       deletedCount: 1,
       softDelete: true,
-      message: 'Comment has replies. Soft deleted.'
+      message: 'El comentario tiene despuestas. Se ha eliminado levemente.'
     }
   }
 
@@ -79,7 +79,7 @@ export default function makeRemoveComment ({ commentsDb }) {
     return {
       deletedCount: 2,
       softDelete: false,
-      message: 'Comment and parent deleted.'
+      message: 'Comentario y pariente eliminado.'
     }
   }
 
@@ -88,7 +88,7 @@ export default function makeRemoveComment ({ commentsDb }) {
     return {
       deletedCount: 1,
       softDelete: false,
-      message: 'Comment deleted.'
+      message: 'Comentario eliminado'
     }
   }
 }
