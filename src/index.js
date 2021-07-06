@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 import {
   deleteComment,
   getComments,
-  getAllComments,
   notFound,
   postComment,
   patchComment
@@ -28,7 +27,6 @@ app.delete(`${apiRoot}/comments`, makeCallback(deleteComment))
 app.patch(`${apiRoot}/comments/:id`, makeCallback(patchComment))
 app.patch(`${apiRoot}/comments`, makeCallback(patchComment))
 app.get(`${apiRoot}/comments`, makeCallback(getComments))
-app.get(`${apiRoot}/all-comments`, makeCallback(getAllComments))
 app.use(makeCallback(notFound))
 
 

@@ -1,14 +1,22 @@
 export default function makeListComments ({ commentsDb }) {
   return async function listComments ({ postId } = {}) {
+
     if (!postId) {
-      throw new Error('Debe ingresar una id valida.')
+      
+      const comments = await commentsDb.findAll()
+      const nestedComments = nest(comments)
+      return {
+        message: 'Debe ingresar una id valida. Se procede a mostrar todos los comentarios.',
+        nestedComments
+      }
+    }else{
+      const comments = await commentsDb.findByPostId({
+        postId,
+        omitReplies: false
+      })
+      const nestedComments = nest(comments)
+      return nestedComments
     }
-    const comments = await commentsDb.findByPostId({
-      postId,
-      omitReplies: false
-    })
-    const nestedComments = nest(comments)
-    return nestedComments
 
     // If this gets slow introduce caching.
     function nest (comments) {
