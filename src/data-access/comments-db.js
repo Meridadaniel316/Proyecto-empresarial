@@ -13,7 +13,7 @@ export default function makeCommentsDb ({ makeDb }) {
   })
   async function findAll ({ publishedOnly = true } = {}) {
     const db = await makeDb()
-    const query = publishedOnly ? { published: true } : {}
+    const query = publishedOnly ? { published: false } : {}
     const result = await db.collection('comments').find(query)
     return (await result.toArray()).map(({ _id: id, ...found }) => ({
       id,

@@ -67,7 +67,7 @@ export default function makeRemoveComment ({ commentsDb }) {
     return {
       deletedCount: 1,
       softDelete: true,
-      message: 'El comentario tiene despuestas. Se ha eliminado levemente.'
+      message: 'El comentario tiene respuestas. Se ha eliminado levemente.'
     }
   }
 
