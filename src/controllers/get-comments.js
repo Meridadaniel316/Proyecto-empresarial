@@ -1,3 +1,4 @@
+import { Observable } from "rxjs"
 export default function makeGetComments ({ listComments }) {
   return async function getComments (httpRequest) {
     const headers = {
@@ -7,6 +8,16 @@ export default function makeGetComments ({ listComments }) {
       const postComments = await listComments({
         postId: httpRequest.query.postId
       })
+
+      const getCommentsEvent$ = new Observable(subs => {
+        subs.next(postComments);
+        subs.complete();
+
+      })
+  
+      getCommentsEvent$.subscribe(x => {
+        console.log(x);
+      });
       return {
         headers,
         statusCode: 200,

@@ -5,10 +5,7 @@ export default function makeListComments ({ commentsDb }) {
       
       const comments = await commentsDb.findAll()
       const nestedComments = nest(comments)
-      return {
-        message: 'Debe ingresar una id valida. Se procede a mostrar todos los comentarios.',
-        nestedComments
-      }
+      return nestedComments
     }else{
       const comments = await commentsDb.findByPostId({
         postId,

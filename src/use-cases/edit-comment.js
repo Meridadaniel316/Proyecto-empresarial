@@ -17,6 +17,7 @@ export default function makeEditComment ({ commentsDb, handleModeration }) {
       return existing
     }
     const moderated = await handleModeration({ comment })
+    
     const updated = await commentsDb.update({
       id: moderated.getId(),
       published: moderated.isPublished(),
@@ -24,6 +25,6 @@ export default function makeEditComment ({ commentsDb, handleModeration }) {
       text: moderated.getText(),
       hash: moderated.getHash()
     })
-    return { ...existing, ...updated }
+    return { ...existing, ...updated}
   }
 }

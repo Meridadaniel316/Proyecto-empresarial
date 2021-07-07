@@ -6,7 +6,7 @@ import makeHandleModeration from './handle-moderation'
 import commentsDb from '../data-access'
 
 const handleModeration = makeHandleModeration({
-  initiateReview: async () => {} // TODO: Make real initiate review function.
+  initiateReview: async () => {} 
 })
 const addComment = makeAddComment({ commentsDb, handleModeration })
 const editComment = makeEditComment({ commentsDb, handleModeration })

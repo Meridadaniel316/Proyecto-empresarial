@@ -106,6 +106,31 @@ describe('Comments API', () => {
     })
   })
   describe('listando comentarios', () => {
+    it('Lista todos los comentarios de una publicacion', async () => {
+      const comment1 = makeFakeComment({ replyToId: null })
+      const comment2 = makeFakeComment({
+        postId: comment1.postId,
+        replyToId: null
+      })
+      const comments = [comment1, comment2]
+      const inserts = await Promise.all(comments.map(commentsDb.insert))
+      const expected = [
+        {
+          ...comment1,
+          replies: [],
+          createdOn: inserts[0].createdOn
+        },
+        {
+          ...comment2,
+          replies: [],
+          createdOn: inserts[1].createdOn
+        }
+      ]
+      const response = await axios.get('/comments/')
+      expect(response.data).toContainEqual(expected[0])
+      expect(response.data).toContainEqual(expected[1])
+      return comments.map(commentsDb.remove)
+    })
     it('enumera los comentarios de una publicación', async () => {
       const comment1 = makeFakeComment({ replyToId: null })
       const comment2 = makeFakeComment({

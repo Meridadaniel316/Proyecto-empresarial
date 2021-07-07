@@ -1,3 +1,4 @@
+import { Observable } from "rxjs"
 export default function makePatchComment ({ editComment }) {
   return async function patchComment (httpRequest) {
     try {
@@ -13,6 +14,15 @@ export default function makePatchComment ({ editComment }) {
         id: httpRequest.params.id
       }
       const patched = await editComment(toEdit)
+
+      const getCommentsEvent$ = new Observable(subs => {
+        subs.next(patched.text);
+        subs.complete();
+      })
+  
+      getCommentsEvent$.subscribe(x => {
+        console.log("text: " + x);
+      });
       return {
         headers: {
           'Content-Type': 'application/json',

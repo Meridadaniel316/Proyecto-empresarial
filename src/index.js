@@ -21,6 +21,9 @@ app.use((_, res, next) => {
   res.set({ Tk: '!' })
   next()
 })
+
+app.get('/', (req, res) => {res.send("Hello World!")})
+
 app.post(`${apiRoot}/comments`, makeCallback(postComment))
 app.delete(`${apiRoot}/comments/:id`, makeCallback(deleteComment))
 app.delete(`${apiRoot}/comments`, makeCallback(deleteComment))

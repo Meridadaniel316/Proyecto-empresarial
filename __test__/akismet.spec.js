@@ -26,7 +26,7 @@ describe('akismet', () => {
         comment_content: comment.text,
         comment_date_gmt: new Date(comment.createdOn).toISOString(),
         comment_post_modified_gmt: new Date(comment.modifiedOn).toISOString(),
-        blog_lang: 'en',
+        blog_lang: 'es',
         is_test: false
       })
     }

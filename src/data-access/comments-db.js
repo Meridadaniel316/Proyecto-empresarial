@@ -1,6 +1,6 @@
 import Id from '../Id'
 
-export default function makeCommentsDb ({ makeDb }) {
+export default function makeCommentsDb({ makeDb }) {
   return Object.freeze({
     findAll,
     findByHash,
@@ -11,7 +11,8 @@ export default function makeCommentsDb ({ makeDb }) {
     remove,
     update
   })
-  async function findAll ({ publishedOnly = true } = {}) {
+
+  async function findAll({ publishedOnly = true } = {}) {
     const db = await makeDb()
     const query = publishedOnly ? { published: false } : {}
     const result = await db.collection('comments').find(query)
@@ -20,7 +21,7 @@ export default function makeCommentsDb ({ makeDb }) {
       ...found
     }))
   }
-  async function findById ({ id: _id }) {
+  async function findById({ id: _id }) {
     const db = await makeDb()
     const result = await db.collection('comments').find({ _id })
     const found = await result.toArray()
@@ -30,7 +31,7 @@ export default function makeCommentsDb ({ makeDb }) {
     const { _id: id, ...info } = found[0]
     return { id, ...info }
   }
-  async function findByPostId ({ postId, omitReplies = true }) {
+  async function findByPostId({ postId, omitReplies = true }) {
     const db = await makeDb()
     const query = { postId: postId }
     if (omitReplies) {
@@ -42,7 +43,7 @@ export default function makeCommentsDb ({ makeDb }) {
       ...found
     }))
   }
-  async function findReplies ({ commentId, publishedOnly = true }) {
+  async function findReplies({ commentId, publishedOnly = true }) {
     const db = await makeDb()
     const query = publishedOnly
       ? { published: true, replyToId: commentId }
@@ -53,7 +54,7 @@ export default function makeCommentsDb ({ makeDb }) {
       ...found
     }))
   }
-  async function insert ({ id: _id = Id.makeId(), ...commentInfo }) {
+  async function insert({ id: _id = Id.makeId(), ...commentInfo }) {
     const db = await makeDb()
     const result = await db
       .collection('comments')
@@ -62,19 +63,19 @@ export default function makeCommentsDb ({ makeDb }) {
     return { id, ...insertedInfo }
   }
 
-  async function update ({ id: _id, ...commentInfo }) {
+  async function update({ id: _id, ...commentInfo }) {
     const db = await makeDb()
     const result = await db
       .collection('comments')
       .updateOne({ _id }, { $set: { ...commentInfo } })
     return result.modifiedCount > 0 ? { id: _id, ...commentInfo } : null
   }
-  async function remove ({ id: _id }) {
+  async function remove({ id: _id }) {
     const db = await makeDb()
     const result = await db.collection('comments').deleteOne({ _id })
     return result.deletedCount
   }
-  async function findByHash (comment) {
+  async function findByHash(comment) {
     const db = await makeDb()
     const result = await db.collection('comments').find({ hash: comment.hash })
     const found = await result.toArray()
